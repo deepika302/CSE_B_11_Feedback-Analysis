@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seniors Feedback</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f8ff;
+      padding: 30px;
+    }
+    #allFeedbacks{
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 30px auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    /* Navigation Bar Styles */
+    nav {
+      background: #007acc;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 16px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Form and page styling */
+    form {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      color: #333;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #007acc;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #005f99;
+    }
+
+    #submittedFeedback {
+      max-width: 600px;
+      margin: 30px auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+      display: none;
+    }
+
+    #submittedFeedback h2 {
+      color: #007acc;
+    }
+
+    #submittedFeedback p {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="seniors.html">Seniors</a>
+    <a href="juniors.html">Juniors</a>
+    <a href="faculty.html">Faculty</a>
+    <a href="mock interview.html">Mock Interviews</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <h1>Seniors Interview Feedback Form</h1>
+
+  <form id="feedbackForm" aria-label="Senior Feedback Form">
+    <label for="name">Your Name:</label>
+    <input type="text" id="name" required />
+
+    <label for="company">Company Name:</label>
+    <input type="text" id="company" required />
+
+    <label for="role">Role Attended:</label>
+    <input type="text" id="role" required />
+
+    <label for="questions">Interview Questions:</label>
+    <textarea id="questions" rows="5" required></textarea>
+
+    <label for="tips">Tips for Juniors:</label>
+    <textarea id="tips" rows="4" required></textarea>
+
+    <button type="submit">Submit Feedback</button>
+  </form>
+
+  <div id="submittedFeedback" style="display: none;">
+    <h2>Submitted Successfully!</h2>
+    <p>Thank you for submitting your experience.</p>
+  </div>
+
+  <div id="allFeedbacks">
+    <h2>All Senior Feedbacks</h2>
+    <div id="feedbackList">Loading...</div>
+  </div>
+
+  <script>
+    const form = document.getElementById("feedbackForm");
+    const feedbackList = document.getElementById("feedbackList");
+    const submittedFeedback = document.getElementById("submittedFeedback");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const payload = {
+        name: document.getElementById("name").value.trim(),
+        company: document.getElementById("company").value.trim(),
+        role: document.getElementById("role").value.trim(),
+        questions: document.getElementById("questions").value.trim(),
+        tips: document.getElementById("tips").value.trim()
+      };
+
+      try {
+        const res = await fetch("http://localhost:3000/add-senior", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          alert("✅ Feedback submitted successfully!");
+          submittedFeedback.style.display = "block";
+          form.reset();
+          fetchFeedbacks(); // Refresh list
+        } else {
+          alert("❌ Error submitting feedback.");
+        }
+      } catch (err) {
+        alert("❌ Server error.");
+        console.error(err);
+      }
+    });
+
+    async function fetchFeedbacks() {
+      try {
+        const res = await fetch("http://localhost:3000/all-seniors");
+        if (!res.ok) throw new Error("Failed to fetch");
+
+        const data = await res.json();
+        feedbackList.innerHTML = "";
+
+        if (data.length === 0) {
+          feedbackList.innerHTML = "<p>No feedback yet.</p>";
+          return;
+        }
+
+        data.forEach(item => {
+          const div = document.createElement("div");
+          div.classList.add("entry");
+          div.innerHTML = `
+            <p><strong>Name:</strong> ${item.name}</p>
+            <p><strong>Company:</strong> ${item.company}</p>
+            <p><strong>Role:</strong> ${item.role}</p>
+            <p><strong>Questions:</strong><br>${item.questions.replace(/\n/g, "<br>")}</p>
+            <p><strong>Tips:</strong><br>${item.tips.replace(/\n/g, "<br>")}</p>
+          `;
+          feedbackList.appendChild(div);
+        });
+      } catch (err) {
+        feedbackList.innerHTML = "<p>❌ Error loading feedbacks.</p>";
+        console.error(err);
+      }
+    }
+
+    // Load feedbacks on page load
+    document.addEventListener("DOMContentLoaded", fetchFeedbacks);
+  </script>
+
+</body>
+</html>

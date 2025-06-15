@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - Interview Feedback Analysis</title>
+  <style>
+    /* General Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: #004466;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    header nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    header nav ul li {
+      margin: 0 15px;
+    }
+
+    header nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+
+    header nav ul li a:hover {
+      color: #ffcc00;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 20px;
+      background-color: white;
+    }
+
+    .about-container {
+      max-width: 1000px;
+      padding: 40px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .about-container h1 {
+      font-size: 36px;
+      color: #004466;
+      margin-bottom: 20px;
+    }
+
+    .about-container p {
+      font-size: 18px;
+      margin-top: 20px;
+      line-height: 1.7;
+    }
+
+    .about-container ul {
+      margin-top: 20px;
+      list-style-type: square;
+      padding-left: 20px;
+    }
+
+    .about-container h2 {
+      margin-top: 40px;
+      font-size: 28px;
+      color: #004466;
+    }
+
+    footer {
+      background-color: #004466;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      margin-top: 20px;
+    }
+
+    footer p {
+      font-size: 14px;
+    }
+
+    /* Styles for Dynamic Content */
+    .hidden {
+      display: none;
+    }
+
+    #dynamicContent {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #e8f0fe;
+      border-left: 5px solid #004466;
+    }
+
+    #dynamicContent p {
+      font-size: 18px;
+      color: #333;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <h1>Interview Feedback Analysis</h1>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="seniors.html">Seniors</a></li>
+        <li><a href="juniors.html">Juniors</a></li>
+        <li><a href="faculty.html">Faculty</a></li>
+        <li><a href="mock interview.html">Mock Interviews</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content Section -->
+  <main>
+    <div class="about-container">
+      <h1>About Interview Feedback Analysis</h1>
+      <p>
+        <strong>Interview Feedback Analysis</strong> is an innovative and comprehensive platform designed to assist job seekers in their preparation for various interviews, particularly in technical and behavioral assessments. Our platform enables individuals from various backgrounds—whether they are fresh graduates, experienced professionals, or mentors—to come together, share valuable insights, and receive constructive feedback on their interview performance.
+      </p>
+      <p>
+        At Interview Feedback Analysis, we focus on empowering individuals through the exchange of knowledge and real-world experiences. By providing an environment where both juniors and seniors can interact, share feedback, and collaborate, we aim to streamline the interview preparation process, helping users not only prepare for interviews but also excel in them.
+      </p>
+
+      <h2>Our Vision</h2>
+      <p>
+        Our vision is to create a global community where aspiring professionals can seamlessly interact with mentors, seniors, and peers. Through a collaborative ecosystem of shared interview experiences, feedback, and guidance, we seek to bridge the gap between theoretical knowledge and practical interview scenarios.
+      </p>
+
+      <h2>Our Mission</h2>
+      <p>
+        Our mission is to provide a reliable platform that allows individuals to simulate real interview experiences, receive feedback, and continuously improve their performance. We believe that by learning from others' experiences, refining one's skills, and practicing regularly, anyone can increase their chances of securing their desired position.
+      </p>
+
+      <h2>Core Features</h2>
+      <ul>
+        <li>Platform for students (Juniors) to review interview feedback from seniors and faculty members.</li>
+        <li>Dedicated space for seniors to submit their interview experiences and mentor juniors.</li>
+        <li>Faculty members offering constructive feedback, corrections, and personalized advice to both students and seniors.</li>
+        <li>Mock interview simulations to practice and improve communication and problem-solving skills under pressure.</li>
+        <li>Comprehensive resources, including coding challenges, interview strategies, and technical tips.</li>
+        <li>Personalized performance analytics to help identify strengths and areas for improvement.</li>
+      </ul>
+
+      <h2>How It Works</h2>
+      <p>
+        Interview Feedback Analysis operates on a three-tier system to foster collaboration among Juniors, Seniors, and Faculty:
+      </p>
+      <ul>
+        <li><strong>Juniors</strong> can browse through real interview experiences submitted by seniors and faculty, gain valuable insights, and learn how to improve their responses.</li>
+        <li><strong>Seniors</strong> contribute their interview experiences, offering feedback and advice to juniors. This not only helps juniors but also allows seniors to reflect on their performance and improve their skills.</li>
+        <li><strong>Faculty</strong> members provide expert advice, correct technical answers, and mentor both seniors and juniors to ensure the best possible interview preparation.</li>
+      </ul>
+
+      <h2>Dynamic Content</h2>
+      <p>
+        To further assist in your preparation, we continuously add new content and features to enhance the learning experience. These features include personalized assessments, performance reviews, and more. Our goal is to provide a platform that adapts to the needs of each user, delivering tailored resources based on their progress.
+      </p>
+
+      <!-- Dynamic Content Button -->
+      <button onclick="toggleDynamicContent()">Learn More</button>
+
+      <!-- Dynamic Content (Hidden by default) -->
+      <div id="dynamicContent" class="hidden">
+        <h3>Future Features</h3>
+        <p>
+          Our platform is continuously evolving. Future features include the introduction of timed interview simulations, AI-driven assessments, and video feedback. We also plan to launch an API that will allow integration with external platforms, giving users access to a wider array of resources.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2025 Interview Feedback Analysis | All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript Section -->
+  <script>
+    // Function to toggle the visibility of the dynamic content section
+    function toggleDynamicContent() {
+      const content = document.getElementById('dynamicContent');
+      content.classList.toggle('hidden');
+      const button = document.querySelector('button');
+      if (content.classList.contains('hidden')) {
+        button.textContent = "Learn More";
+      } else {
+        button.textContent = "Show Less";
+      }
+    }
+  </script>
+
+</body>
+</html>

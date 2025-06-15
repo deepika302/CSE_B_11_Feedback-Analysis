@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Juniors Discussion</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f6ff;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav {
+      background-color: #007acc;
+      padding: 15px 30px;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    nav li {
+      margin: 0 15px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #007acc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #005f99;
+    }
+
+    .discussion-section {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .question {
+      background: #eef;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+    }
+
+    .question strong {
+      color: #005f99;
+    }
+
+    .replies {
+      margin-top: 10px;
+      margin-left: 20px;
+    }
+
+    .reply {
+      background: #f9f9f9;
+      padding: 8px;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+
+    .reply-form {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="seniors.html">Seniors</a></li>
+      <li><a href="juniors.html">Juniors</a></li>
+      <li><a href="faculty.html">Faculty</a></li>
+      <li><a href="mock interview.html">Mock Interviews</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Juniors & Seniors Discussion Forum</h1>
+
+    <form id="questionForm">
+      <label for="juniorName">Your Name:</label>
+      <input type="text" id="juniorName" name="juniorName" required />
+
+      <label for="question">Your Question or Doubt:</label>
+      <textarea id="question" name="question" rows="4" required></textarea>
+
+      <button type="submit">Post Question</button>
+    </form>
+
+    <div class="discussion-section" id="discussion">
+      <h3>Questions Asked:</h3>
+      <!-- Questions will appear here -->
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("questionForm");
+    const discussion = document.getElementById("discussion");
+
+    // Load all doubts from backend
+    async function loadDoubts() {
+      try {
+        const res = await fetch("http://localhost:3000/all-doubts");
+        const doubts = await res.json();
+
+        doubts.forEach(doubt => displayDoubt(doubt));
+      } catch (err) {
+        console.error("❌ Failed to fetch doubts", err);
+      }
+    }
+
+    // Create question + reply UI block
+    function displayDoubt(doubt) {
+      const newPost = document.createElement("div");
+      newPost.classList.add("question");
+      newPost.dataset.id = doubt._id;
+      newPost.innerHTML = `<strong>${doubt.name}:</strong> ${doubt.doubt}`;
+
+      const replyContainer = document.createElement("div");
+      replyContainer.classList.add("replies");
+
+      // Render existing replies
+      doubt.replies.forEach(r => {
+        const replyElement = document.createElement("div");
+        replyElement.classList.add("reply");
+        replyElement.innerHTML = `<strong>${r.replier}:</strong> ${r.answer}`;
+        replyContainer.appendChild(replyElement);
+      });
+
+      // Reply form
+      const replyForm = document.createElement("form");
+      replyForm.classList.add("reply-form");
+
+      replyForm.innerHTML = `
+        <label><strong>Reply:</strong></label>
+        <input type="text" placeholder="Your Name" class="reply-name" required />
+        <textarea rows="2" placeholder="Your Answer" class="reply-text" required></textarea>
+        <button type="submit">Post Reply</button>
+      `;
+
+      replyForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const replyName = replyForm.querySelector(".reply-name").value.trim();
+        const replyText = replyForm.querySelector(".reply-text").value.trim();
+
+        if (replyName && replyText) {
+          try {
+            const res = await fetch("http://localhost:3000/reply", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                id: doubt._id,
+                replier: replyName,
+                answer: replyText
+              })
+            });
+
+            if (res.ok) {
+              const replyElement = document.createElement("div");
+              replyElement.classList.add("reply");
+              replyElement.innerHTML = `<strong>${replyName}:</strong> ${replyText}`;
+              replyContainer.appendChild(replyElement);
+              replyForm.reset();
+            } else {
+              alert("❌ Failed to post reply");
+            }
+          } catch (err) {
+            alert("❌ Error posting reply");
+            console.error(err);
+          }
+        }
+      });
+
+      newPost.appendChild(replyContainer);
+      newPost.appendChild(replyForm);
+      discussion.appendChild(newPost);
+    }
+
+    // Handle doubt form submission
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("juniorName").value.trim();
+      const question = document.getElementById("question").value.trim();
+
+      if (name && question) {
+        try {
+          const res = await fetch("http://localhost:3000/add-doubt", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, doubt: question })
+          });
+
+          if (res.ok) {
+            discussion.innerHTML = "<h3>Questions Asked:</h3>"; // clear & reload
+            loadDoubts();
+          } else {
+            alert("❌ Failed to post question");
+          }
+        } catch (err) {
+          alert("❌ Error posting question");
+          console.error(err);
+        }
+
+        form.reset();
+      }
+    });
+
+    // Initial load
+    loadDoubts();
+  </script>
+</body>
+</html>

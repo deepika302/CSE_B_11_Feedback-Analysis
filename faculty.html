@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faculty Panel - Hire Quest</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #eef2f3;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    /* Navigation Bar Styles */
+    nav {
+      background: #007acc;
+      padding: 15px;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 16px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 20px;
+    }
+    .qa-box {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .qa-box h3 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+    .qa-box textarea {
+      width: 100%;
+      height: 100px;
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 14px;
+    }
+    .qa-box button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .qa-box button:hover {
+      background-color: #2ecc71;
+    }
+    .advice {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="seniors.html">Seniors</a>
+    <a href="juniors.html">Juniors</a>
+    <a href="faculty.html">Faculty</a>
+    <a href="mock interview.html">Mock Interviews</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+
+  <header>
+    <h1>Faculty Panel - Review & Advise</h1>
+    <p>Review interview Q&A submitted by seniors and guide students</p>
+  </header>
+
+  <main>
+    <!-- Example Senior Submission -->
+    <div class="qa-box">
+      <h3>Senior: P. Kavyasri</h3>
+      <p><strong>Question:</strong> What is the difference between Python list and tuple?</p>
+      <p><strong>Answer:</strong> Tuple and list both are same, just one has bracket and one has curly braces.</p>
+
+      <label for="correction1"><strong>Faculty Correction:</strong></label>
+      <textarea id="correction1">Tuples are immutable and use ( ), Lists are mutable and use [ ]. Their behavior is also different in memory usage and speed.</textarea>
+      
+      <div class="advice">
+        <label for="advice1"><strong>Advice to Senior & Junior:</strong></label>
+        <textarea id="advice1">Kavyasri, nice try! Next time focus on properties beyond just syntax. Juniors, always look at usage and behavior in real examples.</textarea>
+      </div>
+
+      <button onclick="submitFeedback()">Submit Feedback</button>
+    </div>
+  </main>
+
+  <script>
+    function submitFeedback() {
+      const correction = document.getElementById('correction1').value;
+      const advice = document.getElementById('advice1').value;
+
+      // Basic Validation: Ensure that both fields are not empty
+      if (correction.trim() === "" || advice.trim() === "") {
+        alert("Please fill in both correction and advice fields before submitting.");
+        return;
+      }
+
+      // If the fields are valid, show a success message
+      alert("Feedback Submitted Successfully!");
+
+      // Optionally, reset the fields after submission
+      document.getElementById('correction1').value = "";
+      document.getElementById('advice1').value = "";
+    }
+  </script>
+
+</body>
+</html>

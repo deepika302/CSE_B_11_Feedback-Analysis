@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Interview Feedback Analysis</title>
+  <style>
+    /* General Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: #004466;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    header nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    header nav ul li {
+      margin: 0 15px;
+    }
+
+    header nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+
+    header nav ul li a:hover {
+      color: #ffcc00;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .contact-container {
+      max-width: 800px;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .contact-container h1 {
+      font-size: 36px;
+      color: #004466;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .contact-container p {
+      font-size: 18px;
+      margin-bottom: 20px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    input, textarea {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #004466;
+      outline: none;
+    }
+
+    textarea {
+      height: 150px;
+      resize: none;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 18px;
+      background-color: #004466;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #ffcc00;
+    }
+
+    .error-message {
+      color: #d9534f;
+      font-size: 14px;
+      display: none;
+    }
+
+    .success-message {
+      color: #5bc0de;
+      font-size: 14px;
+      display: none;
+    }
+
+    footer {
+      background-color: #004466;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      margin-top: 30px;
+    }
+
+    footer p {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <h1>Interview Feedback Analysis</h1>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="seniors.html">Seniors</a></li>
+        <li><a href="juniors.html">Juniors</a></li>
+        <li><a href="faculty.html">Faculty</a></li>
+        <li><a href="mock-interviews.html">Mock Interviews</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content Section -->
+  <main>
+    <div class="contact-container">
+      <h1>Contact Us</h1>
+      <p>
+        We would love to hear from you! Please feel free to get in touch with us if you have any queries, suggestions, or feedback about the platform.
+      </p>
+      <form id="contactForm" onsubmit="return validateForm()">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+        <div id="nameError" class="error-message">Name is required.</div>
+
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        <div id="emailError" class="error-message">A valid email is required.</div>
+
+        <label for="message">Your Message:</label>
+        <textarea id="message" name="message" placeholder="Write your message" required></textarea>
+        <div id="messageError" class="error-message">Message cannot be empty.</div>
+
+        <button type="submit">Send Message</button>
+        <div id="successMessage" class="success-message">Your message has been sent successfully!</div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2025 Interview Feedback Analysis | All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript Section -->
+  <script>
+    // Function to validate form data
+    function validateForm() {
+      let isValid = true;
+      // Reset error messages
+      document.getElementById('nameError').style.display = 'none';
+      document.getElementById('emailError').style.display = 'none';
+      document.getElementById('messageError').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'none';
+
+      // Validate Name
+      const name = document.getElementById('name').value;
+      if (name.trim() === '') {
+        document.getElementById('nameError').style.display = 'block';
+        isValid = false;
+      }
+
+      // Validate Email
+      const email = document.getElementById('email').value;
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById('emailError').style.display = 'block';
+        isValid = false;
+      }
+
+      // Validate Message
+      const message = document.getElementById('message').value;
+      if (message.trim() === '') {
+        document.getElementById('messageError').style.display = 'block';
+        isValid = false;
+      }
+
+      // If valid, show success message
+      if (isValid) {
+        document.getElementById('successMessage').style.display = 'block';
+      }
+
+      return false; // Prevent form submission for demo
+    }
+  </script>
+
+</body>
+</html>
